@@ -23,6 +23,7 @@
 <div id="mapid_centros" style="width: 640px; height: 400px;"></div>
 <script>
 
+var url_geoserver = 'http://54.38.180.7:8080/geoserver/wms?';
 	var mymap_zonas = L.map('mapid_zonas', {
     crs: L.CRS.EPSG3857
 }).setView([39.46975, -0.37739], 13);
@@ -46,13 +47,13 @@ var mymap_centros = L.map('mapid_centros', {
 
 
 	//CAPAS WMS
-	var wmsLayer_bachiller = L.tileLayer.wms('http://54.38.180.7:8080/geoserver/wms?', {
+	var wmsLayer_bachiller = L.tileLayer.wms(url_geoserver, {
     layers: '	colegios:areas_bach',
 		format: 'image/png',
 		transparent: true,
 	}).addTo(mymap_zonas);
 
-	var wmsLayer_primaria = L.tileLayer.wms('http://54.38.180.7:8080/geoserver/wms?', {
+	var wmsLayer_primaria = L.tileLayer.wms(url_geoserver, {
 		layers: '	colegios:distritos_prim',
 		format: 'image/png',
 		transparent: true,
@@ -60,7 +61,7 @@ var mymap_centros = L.map('mapid_centros', {
 
 
 
-	var wmsLayer = L.tileLayer.wms('http://54.38.180.7:8080/geoserver/wms?', {
+	var wmsLayer = L.tileLayer.wms(url_geoserver, {
 		layers: '		colegios:viales1',
 		format: 'image/png',
 		transparent: true,
@@ -73,13 +74,13 @@ var mymap_centros = L.map('mapid_centros', {
 	L.control.layers(zonas).addTo(mymap_zonas);
 
 //-------------------------------------------------------------------------------
-	var wmsLayer = L.tileLayer.wms('http://54.38.180.7:8080/geoserver/wms?', {
+	var wmsLayer = L.tileLayer.wms(url_geoserver, {
     layers: 'colegios:centros',
 		format: 'image/png',
 		transparent: true,
 	}).addTo(mymap_centros);
 
-	var wmsLayer = L.tileLayer.wms('http://54.38.180.7:8080/geoserver/wms?', {
+	var wmsLayer = L.tileLayer.wms(url_geoserver, {
 		layers: '		colegios:viales1',
 		format: 'image/png',
 		transparent: true,
