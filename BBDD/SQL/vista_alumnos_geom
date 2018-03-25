@@ -1,0 +1,5 @@
+SELECT alumno.nombre_alumno,alumno.apellidos_alumno,niveles.nombre,tipos_educativo.nombre
+FROM alumnos as alumno
+	  JOIN niveles as niveles ON id_nivel = alumno.id_nivel_educativo 
+	  JOIN tipos_educativos as tipos_educativo ON id_tipo = alumno.id_tipo_educativo 
+
