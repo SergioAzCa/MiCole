@@ -20,7 +20,7 @@
 
 
 <div id="mapid_zonas" style="width: 640px; height: 400px;"></div>
-<div id="mapid_centros" style="width: 640px; height: 400px;"></div>
+<div id="mapid_zonas_contador" style="width: 640px; height: 400px;"></div>
 <script>
 
 var url_geoserver = 'http://54.38.180.7:8080/geoserver/wms?';
@@ -28,7 +28,7 @@ var url_geoserver = 'http://54.38.180.7:8080/geoserver/wms?';
     crs: L.CRS.EPSG3857
 }).setView([39.46975, -0.37739], 13);
 
-var mymap_centros = L.map('mapid_centros', {
+var mymap_zonas_contador = L.map('mapid_zonas_contador', {
 	crs: L.CRS.EPSG3857
 }).setView([39.46975, -0.37739], 13);
 
@@ -40,51 +40,75 @@ var mymap_centros = L.map('mapid_centros', {
 		maxZoom: 18,
 		id: 'mapbox.streets'
 	}).addTo(mymap_zonas);
+
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
 		id: 'mapbox.streets'
-	}).addTo(mymap_centros);
+	}).addTo(mymap_zonas_contador);
 
 
 	//CAPAS WMS
 	var wmsLayer_bachiller = L.tileLayer.wms(url_geoserver, {
-    layers: '	colegios:areas_bach',
-		format: 'image/png',
-		transparent: true,
-	}).addTo(mymap_zonas);
-
-	var wmsLayer_primaria = L.tileLayer.wms(url_geoserver, {
-		layers: '	colegios:distritos_prim',
+    layers: '		colegios:alumno_datos_geoserver',
 		format: 'image/png',
 		transparent: true,
 	}).addTo(mymap_zonas);
 
 
 
-	var wmsLayer = L.tileLayer.wms(url_geoserver, {
-		layers: '		colegios:viales1',
-		format: 'image/png',
-		transparent: true,
-	}).addTo(mymap_zonas);
+
 
 	var zonas = {
     "Bachiller": wmsLayer_bachiller,
-    "Primaria": wmsLayer_primaria
 	};
 	L.control.layers(zonas).addTo(mymap_zonas);
 
 //-------------------------------------------------------------------------------
-	var wmsLayer = L.tileLayer.wms(url_geoserver, {
-    layers: 'colegios:centros',
-		format: 'image/png',
-		transparent: true,
-	}).addTo(mymap_centros);
 
-	var wmsLayer = L.tileLayer.wms(url_geoserver, {
-		layers: '		colegios:viales1',
-		format: 'image/png',
-		transparent: true,
-	}).addTo(mymap_centros);
+
+
+
+
+
+//------------------------------------------------------------------------------- VISTAS GEOSERVER
+
+//var datos_localizacion_alumno = 'portal:'+id_portal;
+
+//LOCALIZACION DEL ALUMNO
+var datos_localizacion_alumno = 'alumno:'+1;
+
+var localizacion_alumno = L.tileLayer.wms(url_geoserver,{
+            layers: 'colegios:localizacion_alumno',
+						viewparams:[datos_localizacion_alumno],
+            format: 'image/png',
+            transparent: true,
+            }).addTo(mymap_zonas);
+
+// LOCALIZACION DEL PORTAL
+var datos_localizacion_portal = 'portal:'+4554;
+var localizacion_portal = L.tileLayer.wms(url_geoserver,{
+            layers: 'colegios:localizacion_portal',
+						viewparams:[datos_localizacion_portal],
+            format: 'image/png',
+            transparent: true,
+            }).addTo(mymap_zonas);
+
+// MAPA CONTADOR DE ALUMNOS POR ZONA
+var contador_zonas = L.tileLayer.wms(url_geoserver,{
+            layers: '	colegios:contador_alumnos_zonas',
+            format: 'image/png',
+            transparent: true,
+					}).addTo(mymap_zonas_contador);
+
+// MAPAS FILTRO ALUMNOS POR ZONAS  POR NIVEL
+var datos_nivel_zona_alumnos = 'nivel:'+3;
+
+var localizacion_alumno = L.tileLayer.wms(url_geoserver,{
+          layers: 'colegios:filtro_alumnos_zona',
+					viewparams:[datos_nivel_zona_alumnos],
+          format: 'image/png',
+          transparent: true,
+        }).addTo(mymap_zonas);
 
 
 </script>
