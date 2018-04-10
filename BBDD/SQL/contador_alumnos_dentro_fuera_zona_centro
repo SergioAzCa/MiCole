@@ -1,0 +1,6 @@
+
+SELECT 
+COUNT(*) filter (WHERE id_zona = (SELECT id_zona FROM areas_zonas_educativas WHERE ST_INTERSECTS((SELECT ST_TRANSFORM((SELECT geom FROM centros WHERE id= 4),4326)),the_geom) AND id_nivel = 4)) as dentro,
+COUNT(*) filter (WHERE id_zona <> (SELECT id_zona FROM areas_zonas_educativas WHERE ST_INTERSECTS((SELECT ST_TRANSFORM((SELECT geom FROM centros WHERE id= 4),4326) ),the_geom) AND id_nivel = 4)) as fuera
+FROM public.alumno_centros_geoserver 
+			

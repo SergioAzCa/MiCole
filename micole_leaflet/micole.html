@@ -47,62 +47,56 @@ var mymap_zonas_contador = L.map('mapid_zonas_contador', {
 	}).addTo(mymap_zonas_contador);
 
 
-	//CAPAS WMS
-	var wmsLayer_bachiller = L.tileLayer.wms(url_geoserver, {
-    layers: '		colegios:alumno_datos_geoserver',
-		format: 'image/png',
-		transparent: true,
-	}).addTo(mymap_zonas);
-
-
-
-
-
-	var zonas = {
-    "Bachiller": wmsLayer_bachiller,
-	};
-	L.control.layers(zonas).addTo(mymap_zonas);
-
-//-------------------------------------------------------------------------------
-
-
-
-
 
 
 //------------------------------------------------------------------------------- VISTAS GEOSERVER
 
-//var datos_localizacion_alumno = 'portal:'+id_portal;
 
 //LOCALIZACION DEL ALUMNO
-var datos_localizacion_alumno = 'alumno:'+1;
-
+var datos_localizacion_alumno = 'alumno:'+1;   //-------RODRIGO añadir despues del +
 var localizacion_alumno = L.tileLayer.wms(url_geoserver,{
             layers: 'colegios:localizacion_alumno',
 						viewparams:[datos_localizacion_alumno],
             format: 'image/png',
             transparent: true,
             }).addTo(mymap_zonas);
+localizacion_alumno.setZIndex(2);
 
 // LOCALIZACION DEL PORTAL
-var datos_localizacion_portal = 'portal:'+4554;
+var datos_localizacion_portal = 'portal:'+4554;   //-------RODRIGO añadir despues del +
 var localizacion_portal = L.tileLayer.wms(url_geoserver,{
             layers: 'colegios:localizacion_portal',
 						viewparams:[datos_localizacion_portal],
             format: 'image/png',
             transparent: true,
             }).addTo(mymap_zonas);
+localizacion_portal.setZIndex(2);
+
+//LOCALIZACION DEL CENTRO
+var datos_localizacion_centro = 'id_vial:'+462500000001+';num_policia:'+4; //-------RODRIGO añadir despues del +
+var localizacion_centro = L.tileLayer.wms(url_geoserver,{
+            layers: 'colegios:localizacion_centro',
+						viewparams:[datos_localizacion_centro],
+            format: 'image/png',
+            transparent: true,
+            }).addTo(mymap_zonas);
+localizacion_alumno.setZIndex(2);
+
+
+
 
 // MAPA CONTADOR DE ALUMNOS POR ZONA
+var datos_nivel_zona_alumnos = 'id_nivel:'+4; //-------RODRIGO añadir despues del +
 var contador_zonas = L.tileLayer.wms(url_geoserver,{
             layers: '	colegios:contador_alumnos_zonas',
+						viewparams:[datos_nivel_zona_alumnos],
             format: 'image/png',
             transparent: true,
 					}).addTo(mymap_zonas_contador);
 
 // MAPAS FILTRO ALUMNOS POR ZONAS  POR NIVEL
-var datos_nivel_zona_alumnos = 'nivel:'+3;
 
+var datos_nivel_zona_alumnos = 'nivel:'+3; //-------RODRIGO añadir despues del +
 var localizacion_alumno = L.tileLayer.wms(url_geoserver,{
           layers: 'colegios:filtro_alumnos_zona',
 					viewparams:[datos_nivel_zona_alumnos],
@@ -110,6 +104,35 @@ var localizacion_alumno = L.tileLayer.wms(url_geoserver,{
           transparent: true,
         }).addTo(mymap_zonas);
 
+//ZONAS DEL CENTRO
+// var datos_zona_centro = 'id_centro:'+4; //-------RODRIGO añadir despues del +
+// var localizacion_alumno = L.tileLayer.wms(url_geoserver,{
+//           layers: 'colegios:zona_centro',
+// 					viewparams:[datos_zona_centro],
+//           format: 'image/png',
+//           transparent: true,
+//         }).addTo(mymap_zonas);
+
+
+//ZONAS DEL CENTRO ALUMNOS FUERA DENTRO
+var datos_zona_centro_dentro = 'id_centro:'+4+';id_nivel:'+4; //-------RODRIGO añadir despues del +
+console.log(datos_zona_centro_dentro)
+var localizacion_alumno_centro_dentro = L.tileLayer.wms(url_geoserver,{
+          layers: 'colegios:alumnos_centros_dentro',
+					viewparams:[datos_zona_centro_dentro],
+          format: 'image/png',
+          transparent: true,
+        });
+
+
+var datos_zona_centro_fuera = 'id_centro:'+4+';id_nivel:'+4; //-------RODRIGO añadir despues del +
+console.log(datos_zona_centro_fuera)
+var localizacion_alumno_centro_fuera = L.tileLayer.wms(url_geoserver,{
+          layers: 'colegios:alumnos_centros_fuera',
+					viewparams:[datos_zona_centro_fuera],
+          format: 'image/png',
+          transparent: true,
+        }).addTo(mymap_zonas);
 
 </script>
 
