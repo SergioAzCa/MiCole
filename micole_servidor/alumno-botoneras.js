@@ -16,7 +16,7 @@ var grupoCapasBase = L.layerGroup().addTo(map_alumno);
 var grupoCapasAlumno = L.layerGroup().addTo(map_alumno);
 
 console.log(grupoCapasAlumno.getLayers());
-var datos_localizacion_portal = 'id_vial:'+462500000001+';num_poli:'+4;   //-------RODRIGO añadir despues del +
+var datos_localizacion_portal = 'portal:'+4554;   //-------RODRIGO añadir despues del +
 var localizacion_portal = L.tileLayer.wms(url_geoserver,{
             layers: 'colegios:localizacion_portal',
 						viewparams:[datos_localizacion_portal],
@@ -24,7 +24,6 @@ var localizacion_portal = L.tileLayer.wms(url_geoserver,{
             transparent: true,
             }).addTo(map_alumno);
 localizacion_portal.setZIndex(5);
-console.log(datos_localizacion_portal);
 console.log(grupoCapasAlumno.getLayers());
 
 
